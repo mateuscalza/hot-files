@@ -1,0 +1,26 @@
+{
+  "name": "hot-files",
+  "version": "1.0.0",
+  "description": "Hot Files Time Machine, or just Hot Files",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "rm -Rf build/* && electron-packager . --out build"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "file",
+    "browser",
+    "explorer",
+    "versioning",
+    "git"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-packager": "^10.1.0",
+    "electron-rebuild": "^1.6.0"
+  },
+  "dependencies": {}
+}
