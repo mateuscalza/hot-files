@@ -18,12 +18,14 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "~1.7.8",
     "electron-packager": "^10.1.0",
     "electron-rebuild": "^1.6.0"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "electron-is": "^2.4.0",
     "fs-extra": "^5.0.0",
     "hidefile": "^2.0.0",
     "klaw": "^2.1.1",
