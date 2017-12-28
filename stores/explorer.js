@@ -7,12 +7,10 @@ export default new class Explorer {
   @observable loading = false
   @observable realPath = null
   @observable content = []
-  @observable selected = null
   @observable levelUp = null
   @observable history = []
 
   set path(value) {
-    this.selected = null
     this.realPath = normalizePath(value)
     this.fromPath(this.realPath)
   }
@@ -20,7 +18,6 @@ export default new class Explorer {
   @action async fromItem(item) {
     this.loading = true
     try {
-      this.selected = null
       await item.includeDetails()
       if (item.type !== types.DIRECTORY) {
         await this.open(item)
@@ -49,7 +46,6 @@ export default new class Explorer {
         this.loading = false
         return
       }
-      this.selected = null
       this.realPath = item.path
       await item.includeContent()
       this.content = item.content
@@ -71,6 +67,14 @@ export default new class Explorer {
     }
     const content = this.content.map((item, currentIndex)=> {
       item.selected = currentIndex  === index ? !item.selected : false
+      return item
+    })
+    this.content.replace(content)
+  }
+
+  @action unselect() {
+    const content = this.content.map((item, currentIndex)=> {
+      item.selected = false
       return item
     })
     this.content.replace(content)

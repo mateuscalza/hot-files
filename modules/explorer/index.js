@@ -29,6 +29,7 @@ class Item {
     this.exists = null
     this.details = false
     this.content = null
+    this.versionable = null
   }
 
   async includeDetails() {
@@ -50,14 +51,12 @@ class Item {
       this.type = types.FILE
     } else if (stat.isDirectory()) {
       this.type = types.DIRECTORY
+      this.versionable = await fs.exists(path.join(this.path, '.git'))
+      this.shortName = truncateMiddle(this.name, 17, 0, '...')
     } else if (stat.isSymbolicLink()) {
       this.type = types.SYMBOLIC_LINK
     } else {
       this.type = types.UNKNOWN
-    }
-
-    if (this.type == types.DIRECTORY) {
-      this.shortName = truncateMiddle(this.name, 17, 0, '...')
     }
 
     this.details = true
