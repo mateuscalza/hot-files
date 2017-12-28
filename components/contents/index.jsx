@@ -4,6 +4,8 @@ import { observer, inject } from 'mobx-react'
 import Item from './item'
 
 const Wrapper = styled.main`
+  position: relative;
+
   flex: 3;
   border-left: 1px solid rgba(0,0,0,0.15);
   background-color: #fff;
@@ -46,7 +48,14 @@ export default class Contents extends Component {
     return (
       <Wrapper innerRef={wrapperElement => this.wrapperElement = wrapperElement}>
         {explorer.content && explorer.content.map(
-          item => <Item key={item.path} item={item} onClick={() => this.setState({ ok: true })} onDoubleClick={() => explorer.path = item.path} />
+          item => (
+            <Item
+              key={item.path}
+              item={item}
+              onClick={() => this.setState({ ok: true })}
+              onDoubleClick={() => explorer.fromItem(item)}
+            />
+          )
         )}
       </Wrapper>
     )

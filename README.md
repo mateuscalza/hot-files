@@ -6,15 +6,22 @@ Hot Files Time Machine, or just Hot Files is a multiplatform file browser.
 
 Feel free to contribute
 
-* Make versionable
 * Timeline and time travel
 * Embed git
 * File (or folder) preview and details
 * Commit!
 * Create folder
-* Other view modes
+* Order options and view modes
 * Fix folders on sidebar
+* Copy, paste and duplicate
 * Context menu
+  - Copy full path
+  - Make it versionable
+  - Duplicate
+  - P2P share
+  - Avaible offline (when file service)
+  - Delete (and definitive delete)
+  - Fix on sidebar
 * Keyboard shortcuts
 * Dropbox integration
 * Google Drive integration
@@ -23,6 +30,7 @@ Feel free to contribute
 * Drag'n'drop
 * Open folder by text input
 * i18n
+* Selection rect
 * File search with ElasticSearch alternative
 * Permission fix to access root files
 * Check Windows and Linux compatibility

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { types } from '../../modules/explorer'
 import FolderIcon from '../icons/folder'
+import FileIcon from '../icons/file'
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,10 +23,13 @@ export default class Item extends Component {
 
   render() {
     const { item, ...props } = this.props
-    const { shortName, path } = item
+    const { shortName, path, type } = item
     return (
       <Wrapper title={path} {...props}>
-        <FolderIcon size={48} fill='#4890ff' />
+        {type === types.DIRECTORY
+          ? <FolderIcon size={48} fill='#4890ff' />
+          : <FileIcon size={48} fill='#4890ff' />
+        }
         <Name>{shortName}</Name>
       </Wrapper>
     )

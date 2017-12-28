@@ -8,7 +8,7 @@ import truncateMiddle from 'truncate-middle'
 
 const hidefile = bluebird.promisifyAll(hidefileWithCallbacks)
 
-const types = {
+export const types = {
   FILE: 'FILE',
   DIRECTORY: 'DIRECTORY',
   SYMBOLIC_LINK: 'SYMBOLIC_LINK',
@@ -32,7 +32,6 @@ class Item {
   }
 
   async includeDetails() {
-    this.details = true
     if (!await fs.exists(this.path)) {
       this.exists = false
       return this
@@ -59,6 +58,8 @@ class Item {
     if (this.type == types.DIRECTORY) {
       this.shortName = truncateMiddle(this.name, 17, 0, '...')
     }
+
+    this.details = true
 
     return this
   }
