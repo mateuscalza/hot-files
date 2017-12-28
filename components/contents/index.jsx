@@ -8,6 +8,7 @@ const Wrapper = styled.main`
   border-left: 1px solid rgba(0,0,0,0.15);
   background-color: #fff;
   padding: 10px;
+  user-select: none;
   overflow-y: scroll;
 
   display: grid;
@@ -35,14 +36,12 @@ export default class Contents extends Component {
   }
 
   handlePathChange() {
-    console.log('this.wrapperElement', this.wrapperElement)
     if (this.wrapperElement) {
       this.wrapperElement.scrollTop = 0
     }
   }
 
   render() {
-    console.log('render contents')
     const { explorer } = this.props
     return (
       <Wrapper innerRef={wrapperElement => this.wrapperElement = wrapperElement}>

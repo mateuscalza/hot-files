@@ -8,6 +8,7 @@ Feel free to contribute
 
 * Make versionable
 * Timeline and time travel
+* Embed git
 * File (or folder) preview and details
 * Commit!
 * Create folder
@@ -21,6 +22,7 @@ Feel free to contribute
 * P2P magnet link generator
 * Drag'n'drop
 * Open folder by text input
+* i18n
 * File search with ElasticSearch alternative
 * Permission fix to access root files
 * Check Windows and Linux compatibility

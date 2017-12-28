@@ -98,8 +98,8 @@ class Item {
   static async fromPath(fullPath) {
     const item = new Item()
 
-    item.path = untildify(path.normalize(fullPath))
-    item.name = path.basename(item.path)
+    item.path = normalizePath(fullPath)
+    item.name = path.basename(item.path) || item.path
     item.shortName = truncateMiddle(item.name, 17, 3, '...')
     item.extension = path.extname(item.path).replace(/^\./, '')
 
@@ -107,5 +107,6 @@ class Item {
   }
 }
 
+export const normalizePath = fullPath => untildify(path.normalize(fullPath))
 export const fromPath = fullPath => Item.fromPath(fullPath)
 export const getDirectoryContent = fullPath => Item.getDeepDirectoryContent(fullPath)

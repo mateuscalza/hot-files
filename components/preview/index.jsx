@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   flex: 3;
   border-left: 1px solid rgba(0,0,0,0.15);
   background-color: #fff;
@@ -13,7 +13,7 @@ export default class Preview extends Component {
   render() {
     return (
       <Wrapper>
-        Olá!
+        Coming soon.
       </Wrapper>
     )
   }
