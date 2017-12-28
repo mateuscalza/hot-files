@@ -1,9 +1,11 @@
-const fs = require('fs-extra')
-const path = require('path')
-const klaw = require('klaw')
-const untildify = require('untildify')
-const bluebird = require('bluebird')
-const hidefile = bluebird.promisifyAll(require('hidefile'))
+import fs from'fs-extra'
+import path from 'path'
+import klaw from 'klaw'
+import untildify from 'untildify'
+import bluebird from 'bluebird'
+import hidefileWithCallbacks from 'hidefile'
+
+const hidefile = bluebird.promisifyAll(hidefileWithCallbacks)
 
 const types = {
   FILE: 'FILE',
@@ -97,7 +99,5 @@ class Item {
   }
 }
 
-module.exports = {
-  fromPath: fullPath => Item.fromPath(fullPath),
-  getDirectoryContent: fullPath => Item.getDeepDirectoryContent(fullPath)
-}
+export const fromPath = fullPath => Item.fromPath(fullPath)
+export const getDirectoryContent = fullPath => Item.getDeepDirectoryContent(fullPath)
