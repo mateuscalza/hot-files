@@ -68,4 +68,5 @@ npm run build
 
 ## License
 
-[CC0 1.0 (Public Domain)](LICENSE.md)
+Copyright (c) Mateus Calza. All rights reserved.
+Licensed under the [MIT](LICENSE.md) License.
