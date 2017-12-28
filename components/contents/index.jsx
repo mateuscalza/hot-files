@@ -17,7 +17,7 @@ const Wrapper = styled.main`
   grid-auto-flow: row;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
-  grid-template-rows: repeat(auto-fill,minmax(100px,1fr));
+  grid-template-rows: repeat(auto-fill,minmax(90px,1fr));
   grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
 `
 
@@ -48,11 +48,11 @@ export default class Contents extends Component {
     return (
       <Wrapper innerRef={wrapperElement => this.wrapperElement = wrapperElement}>
         {explorer.content && explorer.content.map(
-          item => (
+          (item, index) => (
             <Item
               key={item.path}
               item={item}
-              onClick={() => this.setState({ ok: true })}
+              onClick={() => explorer.toggleSelect(index)}
               onDoubleClick={() => explorer.fromItem(item)}
             />
           )

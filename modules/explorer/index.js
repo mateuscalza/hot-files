@@ -44,6 +44,7 @@ class Item {
     this.updatedAt = stat.ctime
     this.accessedAt = stat.atime
     this.size = stat.size
+    this.selected = false
 
     if (stat.isFile()) {
       this.type = types.FILE

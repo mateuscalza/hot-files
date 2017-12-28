@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx'
+import { observable, computed, action, extendObservable } from 'mobx'
 import { resolve } from 'path'
 import opn from 'opn'
 import { fromPath, normalizePath, types } from '../modules/explorer'
@@ -6,7 +6,7 @@ import { fromPath, normalizePath, types } from '../modules/explorer'
 export default new class Explorer {
   @observable loading = false
   @observable realPath = null
-  @observable content = null
+  @observable content = []
   @observable selected = null
   @observable levelUp = null
   @observable history = []
@@ -60,6 +60,20 @@ export default new class Explorer {
       this.loading = false
       throw error
     }
+  }
+
+  @action toggleSelect(index, multiple = false) {
+    if (multiple) {
+      const content = this.content
+      content[index].selected = !content[index].selected
+      this.content.replace(content)
+      return
+    }
+    const content = this.content.map((item, currentIndex)=> {
+      item.selected = currentIndex  === index ? !item.selected : false
+      return item
+    })
+    this.content.replace(content)
   }
 
   @action async prepareLevelUp() {

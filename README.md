@@ -15,6 +15,7 @@ Feel free to contribute
 * Fix folders on sidebar
 * Copy, paste and duplicate
 * Context menu
+  - Copy, cut and paste
   - Copy full path
   - Make it versionable
   - Duplicate
