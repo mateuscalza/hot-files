@@ -13,29 +13,48 @@ export default new class Explorer {
   set path(value) {
     this.selected = null
     this.realPath = normalizePath(value)
-    this.fetchItems()
-    this.prepareLevelUp()
-    this.addToHistory(this.realPath)
+    this.fromPath(this.realPath)
   }
 
   @action async prepareLevelUp() {
     this.levelUp = await fromPath(this.realPath !== '/' ? resolve(this.realPath, '..') : '/')
   }
 
-  @action async addToHistory(path) {
+  @action async addToHistory(item) {
     const history = Array.from(this.history)
-    history.push(await fromPath(path))
+    history.push(item)
     if (history.length > 3) {
       history.shift()
     }
     this.history = history
   }
 
-  @action async fetchItems() {
+  @action async backToHistoryIndex(index) {
+    const item = this.history[index]
+    this.history = this.history.slice(0, index)
+    this.fromItem(item)
+  }
+
+  @action async fromItem(item) {
     this.loading = true
-    const item = await fromPath(this.realPath)
+    this.selected = null
+    this.realPath = item.path
     await item.includeContent()
     this.content = item.content
+    await this.addToHistory(item)
+    await this.prepareLevelUp()
+    this.loading = false
+  }
+
+  @action async fromPath(path) {
+    this.loading = true
+    const item = await fromPath(path)
+    this.selected = null
+    this.realPath = item.path
+    await item.includeContent()
+    this.content = item.content
+    await this.addToHistory(item)
+    await this.prepareLevelUp()
     this.loading = false
   }
 

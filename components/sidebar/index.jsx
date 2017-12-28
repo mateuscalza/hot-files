@@ -61,8 +61,8 @@ export default class Sidebar extends Component {
         </Section>
         <Section>
           <Title>History</Title>
-          {explorer.history.map((item, key) => (
-            <Item key={key} onClick={() => explorer.path = item.path}>
+          {explorer.history.map((item, index) => (
+            <Item key={index} onClick={() => explorer.backToHistoryIndex(index)}>
               <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
               <Name>{item.shortName}</Name>
             </Item>
