@@ -4,7 +4,8 @@ import FolderIcon from '../icons/folder'
 
 const Wrapper = styled.aside`
   flex: 1;
-  max-width: 200px;
+  max-width: 150px;
+  background-color: rgba(220,220,220,0.1);
 `
 const Section = styled.section`
   font-size: 12px;
@@ -12,7 +13,7 @@ const Section = styled.section`
 `
 const Title = styled.span`
   font-weight: 600;
-  padding: 10px 10px 0;
+  padding: 10px 10px 3px;
 `
 const Item = styled.a.attrs({ href: '#' })`
   display: flex;
@@ -21,9 +22,13 @@ const Item = styled.a.attrs({ href: '#' })`
   align-items: center;
   color: inherit;
   text-decoration: none;
-  padding: 0 10px;
+  padding: 3px 10px;
+
+  &:hover {
+    background-color: rgba(210,210,210,0.25);
+  }
 `
-const Icon = styled.span`padding: 5px;`
+const Icon = styled.span`padding: 0 5px;`
 const Name = styled.span``
 
 export default class Sidebar extends Component {
@@ -34,7 +39,7 @@ export default class Sidebar extends Component {
         <Section>
           <Title>Local files</Title>
           <Item>
-            <Icon><FolderIcon size={22} fill='#95a5a6' /></Icon>
+            <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
             <Name>User files</Name>
           </Item>
         </Section>
