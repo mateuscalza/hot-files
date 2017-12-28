@@ -7,7 +7,6 @@ Hot Files Time Machine, or just Hot Files is a multiplatform file browser.
 Feel free to contribute
 
 * Make versionable
-* Scroll up
 * Timeline and time travel
 * File (or folder) preview and details
 * Commit!
