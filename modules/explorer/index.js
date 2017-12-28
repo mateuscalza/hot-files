@@ -35,6 +35,7 @@ class Item {
     }
     const stat = await fs.lstat(this.path)
 
+    this.hidden = await hidefile.isHiddenAsync(this.path)
     this.exists = true
     this.createdAt = stat.birthtime
     this.updatedAt = stat.ctime
@@ -62,11 +63,15 @@ class Item {
       const content = await Item.getDirectoryContent(this.path, {
         depthLimit
       })
-      this.content = includeHidden ? content : await bluebird.filter(
-        content,
-        async item => !await hidefile.isHiddenAsync(item),
-        { concurrency: 2 }
+      const contentWithDetails = await bluebird.map(content, async fullPath => {
+        const item = await Item.fromPath(fullPath)
+        await item.includeDetails()
+        return item
+      }, { concurrency: 2 })
+      const filteredContentWithDetails = includeHidden ? contentWithDetails : contentWithDetails.filter(
+        item => !item.hidden
       )
+      this.content = filteredContentWithDetails
     }
     return 
   }
@@ -94,8 +99,5 @@ class Item {
 
 module.exports = {
   fromPath: fullPath => Item.fromPath(fullPath),
-  fromPathWithDetails: async fullPath => (await Item.fromPath(fullPath)).includeDetails(),
-  fromPathWithContent: async (fullPath, options) => 
-    (await Item.fromPath(fullPath)).includeContent(options),
   getDirectoryContent: fullPath => Item.getDeepDirectoryContent(fullPath)
 }
