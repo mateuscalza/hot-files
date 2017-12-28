@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
 import FolderIcon from '../icons/folder'
 
 const Wrapper = styled.aside`
-  flex: 1;
+  flex: 2;
   max-width: 150px;
-  background-color: rgba(220,220,220,0.1);
+  background-color: rgba(220,220,220,0.15);
 `
 const Section = styled.section`
   font-size: 12px;
@@ -31,14 +32,22 @@ const Item = styled.a.attrs({ href: '#' })`
 const Icon = styled.span`padding: 0 5px;`
 const Name = styled.span``
 
+@inject('explorer')
+@observer
 export default class Sidebar extends Component {
 
   render() {
     return (
       <Wrapper>
         <Section>
+          <Title>Level up</Title>
+        </Section>
+        <Section>
+          <Title>Last open</Title>
+        </Section>
+        <Section>
           <Title>Local files</Title>
-          <Item>
+          <Item onClick={() => this.props.explorer.path = '~'}>
             <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
             <Name>User files</Name>
           </Item>

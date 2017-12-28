@@ -4,6 +4,7 @@ import klaw from 'klaw'
 import untildify from 'untildify'
 import bluebird from 'bluebird'
 import hidefileWithCallbacks from 'hidefile'
+import truncateMiddle from 'truncate-middle'
 
 const hidefile = bluebird.promisifyAll(hidefileWithCallbacks)
 
@@ -17,6 +18,7 @@ const types = {
 class Item {
   constructor() {
     this.name = null
+    this.shortName = null
     this.path = null
     this.createdAt = null
     this.updatedAt = null
@@ -53,6 +55,11 @@ class Item {
     } else {
       this.type = types.UNKNOWN
     }
+
+    if (this.type == types.DIRECTORY) {
+      this.shortName = truncateMiddle(this.name, 17, 0, '...')
+    }
+
     return this
   }
 
@@ -75,14 +82,14 @@ class Item {
       )
       this.content = filteredContentWithDetails
     }
-    return 
+    return
   }
 
   static async getDirectoryContent(fullPath, options) {
     return await new Promise((resolve, reject) => {
       const items = []
       klaw(fullPath, options)
-        .on('data', item => items.push(item.path))
+        .on('data', item => item.path !== fullPath && items.push(item.path))
         .on('error', error => reject(error))
         .on('end', () => resolve(items))
     })
@@ -93,6 +100,7 @@ class Item {
 
     item.path = untildify(path.normalize(fullPath))
     item.name = path.basename(item.path)
+    item.shortName = truncateMiddle(item.name, 17, 3, '...')
     item.extension = path.extname(item.path).replace(/^\./, '')
 
     return item

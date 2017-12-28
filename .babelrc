@@ -3,5 +3,6 @@
       "targets": {
         "node": "8"
       }
-    }], "stage-0", "react"]
+    }], "stage-0", "react"],
+  "plugins": ["transform-decorators-legacy"]
 }

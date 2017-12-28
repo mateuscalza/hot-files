@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Sidebar from '../sidebar'
-import Main from '../main'
+import Preview from '../preview'
+import Contents from '../contents'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -14,7 +15,8 @@ export default class App extends Component {
     return (
       <Wrapper>
         <Sidebar />
-        <Main />
+        <Contents />
+        <Preview />
       </Wrapper>
     )
   }

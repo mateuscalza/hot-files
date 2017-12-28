@@ -2,16 +2,15 @@ import bluebird from 'bluebird'
 import is from 'electron-is'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'mobx-react'
+import stores from '../../stores'
 import App from '../../components/app'
-import { fromPath } from '../explorer'
 
 async function init() {
-  // debugger
-  // const item = await fromPath('~')
-  // await item.includeContent()
-  // console.log('item.content', item.content)
   ReactDOM.render(
-    <App />,
+    <Provider {...stores}>
+      <App />
+    </Provider>,
     document.getElementById('app')
   )
 }
