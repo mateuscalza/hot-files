@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import FolderIcon from '../icons/folder'
+import Icon from '../icons'
+import { TopPanel, Button } from '../controls'
+import { primaryColor } from '../../design/constants'
 
 const Wrapper = styled.aside`
   flex: 2;
@@ -32,7 +35,7 @@ const Item = styled.a.attrs({ href: '#' })`
     background-color: rgba(210,210,210,0.25);
   }
 `
-const Icon = styled.span`padding: 0 5px;`
+const IconWrapper = styled.span`padding: 0 5px;`
 const Name = styled.span``
 
 @inject('explorer')
@@ -43,30 +46,39 @@ export default class Sidebar extends Component {
     const { explorer } = this.props
     return (
       <Wrapper>
-        <Section>
-          <Title>Level up</Title>
-          {explorer.levelUp && (
-            <Item onClick={() => explorer.path = explorer.levelUp.path}>
-              <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
-              <Name>{explorer.levelUp.shortName}</Name>
-            </Item>
-          )}
-        </Section>
+        <TopPanel>
+          <Button
+            disabled={!explorer.backCandidate}
+            title={explorer.backCandidate ? explorer.backCandidate.path : null}
+            onClick={() => explorer.goBack()}
+            style={{ borderRadius: '5px 0 0 5px' }}
+          >
+            <Icon name='arrowLeft' />
+          </Button>
+          <Button
+            disabled={!explorer.forwardCandidate}
+            title={explorer.forwardCandidate ? explorer.forwardCandidate.path : null}
+            onClick={() => explorer.goForward()}
+            style={{ marginLeft: -1, borderRadius: '0 5px 5px 0' }}
+          >
+            <Icon name='arrowRight' />
+          </Button>
+          <Button
+            disabled={!explorer.levelUp}
+            title={explorer.levelUp ? explorer.levelUp.path : null}
+            onClick={() => explorer.path = explorer.levelUp.path}
+            style={{ marginLeft: 5 }}
+          >
+            <Icon name='up' />
+          </Button>
+        </TopPanel>
+
         <Section>
           <Title>Local files</Title>
           <Item onClick={() => explorer.path = '~'}>
-            <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
+            <IconWrapper><FolderIcon size={22} fill={primaryColor} /></IconWrapper>
             <Name>User files</Name>
           </Item>
-        </Section>
-        <Section>
-          <Title>History</Title>
-          {explorer.history.map((item, index) => (
-            <Item key={index} onClick={() => explorer.backToHistoryIndex(index)}>
-              <Icon><FolderIcon size={22} fill='#4890ff' /></Icon>
-              <Name>{item.shortName}</Name>
-            </Item>
-          ))}
         </Section>
       </Wrapper>
     )

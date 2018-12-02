@@ -2,20 +2,22 @@ import { observable, computed, action, extendObservable } from 'mobx'
 import { resolve } from 'path'
 import opn from 'opn'
 import { fromPath, normalizePath, types } from '../modules/explorer'
+import history from '../modules/history'
 
 export default new class Explorer {
   @observable loading = false
   @observable realPath = null
   @observable content = []
   @observable levelUp = null
-  @observable history = []
+  @observable backCandidate = false
+  @observable forwardCandidate = false
 
   set path(value) {
     this.realPath = normalizePath(value)
     this.fromPath(this.realPath)
   }
 
-  @action async fromItem(item) {
+  @action async fromItem(item, { ignoreHistory = false } = {}) {
     this.loading = true
     try {
       await item.includeDetails()
@@ -27,7 +29,7 @@ export default new class Explorer {
       this.realPath = item.path
       await item.includeContent()
       this.content = item.content
-      await this.addToHistory(item)
+      !ignoreHistory && this.addToHistory(item)
       await this.prepareLevelUp()
       this.loading = false
     } catch (error) {
@@ -36,7 +38,7 @@ export default new class Explorer {
     }
   }
 
-  @action async fromPath(path) {
+  @action async fromPath(path, { ignoreHistory = false } = {}) {
     this.loading = true
     try {
       const item = await fromPath(path)
@@ -49,7 +51,7 @@ export default new class Explorer {
       this.realPath = item.path
       await item.includeContent()
       this.content = item.content
-      await this.addToHistory(item)
+      !ignoreHistory && this.addToHistory(item)
       await this.prepareLevelUp()
       this.loading = false
     } catch (error) {
@@ -84,23 +86,29 @@ export default new class Explorer {
     this.levelUp = await fromPath(this.realPath !== '/' ? resolve(this.realPath, '..') : '/')
   }
 
-  @action async addToHistory(item) {
-    const history = Array.from(this.history)
-    history.push(item)
-    if (history.length > 3) {
-      history.shift()
-    }
-    this.history = history
+  @action updateHistoryObservables() {
+    this.backCandidate = history.findBackCandidate()
+    this.forwardCandidate = history.findForwardCandidate()
   }
 
-  @action async backToHistoryIndex(index) {
-    const item = this.history[index]
-    this.history = this.history.slice(0, index)
-    this.fromItem(item)
+  addToHistory(item) {
+    history.push(item)
+    this.updateHistoryObservables()
+  }
+
+  @action async goBack() {
+    const item = history.goBack()
+    this.updateHistoryObservables()
+    this.fromItem(item, { ignoreHistory: true })
+  }
+
+  @action async goForward() {
+    const item = history.goForward()
+    this.updateHistoryObservables()
+    this.fromItem(item, { ignoreHistory: true })
   }
 
   async open(item) {
-    console.log('item', item, item.path)
     await opn(item.path)
   }
 

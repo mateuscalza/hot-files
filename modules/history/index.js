@@ -1,5 +1,5 @@
 export default new class History {
-  limit = 10
+  limit = 15
   index = 0
   items = []
 
@@ -29,6 +29,26 @@ export default new class History {
 
   canGo(indexCandidate) {
     return !!this.items[this.items.length - 1 + this.index + indexCandidate]
+  }
+
+  canGoBack() {
+    return this.canGo(-1)
+  }
+
+  canGoForward() {
+    return this.canGo(1)
+  }
+
+  findCandidate(indexCandidate) {
+    return this.items[this.items.length - 1 + this.index + indexCandidate]
+  }
+
+  findBackCandidate() {
+    return this.findCandidate(-1)
+  }
+
+  findForwardCandidate() {
+    return this.findCandidate(1)
   }
 
   current() {

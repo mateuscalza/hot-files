@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "rm -Rf build/* && electron-packager . --ignore=build --out build --asar"
+    "build": "rm -Rf build/* && electron-packager . --ignore=build --out build --asar",
+    "rebuild": "electron-rebuild -f"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
